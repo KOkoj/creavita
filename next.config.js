@@ -2,10 +2,16 @@
 const nextConfig = {
   output: 'standalone', // Optimized for hosting platforms
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'vercel.app', 'vercel.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
     // Add your production domain here when you know it
     // domains: ['localhost', 'your-production-domain.com'],
-    unoptimized: process.env.NODE_ENV !== 'production',
+    unoptimized: true,
   },
   // Disable TypeScript checking during build - rely on your IDE for this
   typescript: {
