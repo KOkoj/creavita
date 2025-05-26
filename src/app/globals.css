@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+/* Remove blue outline on focus for all elements */
+*:focus {
+  outline: none !important;
+}
+
+/* Add default hover effect to buttons that don't have one */
+button:not([style*="background-color"]):hover, 
+a:not([style*="background-color"]):hover,
+[role="button"]:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+} 
