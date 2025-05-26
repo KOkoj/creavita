@@ -4,6 +4,8 @@ import path from 'path';
 import connectDb from '@/lib/mongodb';
 import ImageModel from '@/models/Image';
 
+export const dynamic = 'force-dynamic';
+
 // Helper function to handle file deletion safely
 const safeUnlink = (filePath: string) => {
   try {
