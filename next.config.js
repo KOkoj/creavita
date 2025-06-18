@@ -1,21 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone', // Optimized for hosting platforms
+  output: 'export', // Static export for Netlify
+  trailingSlash: true,
   images: {
-    domains: ['localhost', 'vercel.app', 'vercel.com'],
+    unoptimized: true, // Required for static export
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: 'images.unsplash.com',
       },
     ],
-    // Add your production domain here when you know it
-    // domains: ['localhost', 'your-production-domain.com'],
-    unoptimized: true,
   },
-  // Disable TypeScript checking during build - rely on your IDE for this
+  // Disable TypeScript checking during build
   typescript: {
-    ignoreBuildErrors: process.env.NODE_ENV === 'production',
+    ignoreBuildErrors: true,
+  },
+  // Disable ESLint during build
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 }
 

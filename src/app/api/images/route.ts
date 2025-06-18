@@ -1,30 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Image from '@/models/Image';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { v2 as cloudinary } from 'cloudinary';
 
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Force dynamic rendering for MongoDB routes
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs'; // Specify Node.js runtime for file operations
+
+// Helper function for error responses
+const errorResponse = (message: string, status: number = 500, details?: any) => {
+  console.error(`API Error: ${message}`, details);
+  return NextResponse.json({ 
+    error: message,
+    details: details || undefined
+  }, { status });
+};
 
 export async function GET(req: NextRequest) {
   try {
     await connectDB();
-    const images = await Image.find();
+    const images = await Image.find().sort({ createdAt: -1 });
     return NextResponse.json(images);
   } catch (error) {
-    console.error('Error fetching images:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('GET /api/images error:', error);
+    return errorResponse('Failed to fetch images', 500, error);
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
+    // Authentication check
     if (req.cookies.get('access_granted')?.value !== 'true') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return errorResponse('Unauthorized', 401);
+    }
+
+    // Verify Cloudinary configuration
+    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+      console.error('Missing Cloudinary configuration:', {
+        hasCloudName: !!process.env.CLOUDINARY_CLOUD_NAME,
+        hasApiKey: !!process.env.CLOUDINARY_API_KEY,
+        hasApiSecret: !!process.env.CLOUDINARY_API_SECRET
+      });
+      return errorResponse('Cloudinary configuration is missing', 500);
     }
 
     const formData = await req.formData();
@@ -32,29 +56,14 @@ export async function POST(req: NextRequest) {
     const description = formData.get('description') as string;
     const category = formData.get('category') as string;
 
-    // Check if basic fields are provided
+    // Input validation
     if (!title || !description || !category) {
-      return NextResponse.json(
-        { error: 'Missing required fields: title, description, or category' },
-        { status: 400 }
-      );
+      return errorResponse('Missing required fields: title, description, or category', 400);
     }
 
-    // Get files from form data
     const filesField = formData.getAll('file');
-    
-    // Check if at least one file is provided
     if (!filesField.length) {
-      return NextResponse.json(
-        { error: 'No files uploaded' },
-        { status: 400 }
-      );
-    }
-
-    // Ensure uploads directory exists
-    const uploadsDir = join(process.cwd(), 'public/uploads');
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
+      return errorResponse('No files uploaded', 400);
     }
 
     await connectDB();
@@ -64,39 +73,62 @@ export async function POST(req: NextRequest) {
     for (const fileItem of filesField) {
       const file = fileItem as File;
       
-      // Process this file
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        return errorResponse('Invalid file type. Only images are allowed.', 400);
+      }
+
+      // Convert file to base64
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
+      const base64String = buffer.toString('base64');
+      const dataURI = `data:${file.type};base64,${base64String}`;
 
-      const fileName = `${Date.now()}-${file.name}`;
-      const path = join(uploadsDir, fileName);
-      await writeFile(path, buffer);
+      // Upload to Cloudinary
+      try {
+        console.log('Uploading to Cloudinary...');
+        const uploadResponse = await new Promise((resolve, reject) => {
+          cloudinary.uploader.upload(dataURI, {
+            folder: 'gallery',
+            resource_type: 'auto'
+          }, (error, result) => {
+            if (error) {
+              console.error('Cloudinary upload error:', error);
+              reject(error);
+            } else {
+              console.log('Cloudinary upload success:', result);
+              resolve(result);
+            }
+          });
+        });
 
-      // Create database entry
-      const image = await Image.create({
-        title: filesField.length > 1 ? `${title} - ${uploadedImages.length + 1}` : title,
-        description,
-        category,
-        url: `/uploads/${fileName}`,
-      });
+        const { secure_url } = uploadResponse as { secure_url: string };
 
-      uploadedImages.push(image);
+        // Create database entry
+        const image = await Image.create({
+          title: filesField.length > 1 ? `${title} - ${uploadedImages.length + 1}` : title,
+          description,
+          category,
+          url: secure_url,
+        });
+        uploadedImages.push(image);
+      } catch (uploadError) {
+        console.error('Error in upload process:', uploadError);
+        return errorResponse('Failed to upload image to cloud storage', 500, uploadError);
+      }
     }
 
     // Return appropriate response
-    if (uploadedImages.length === 1) {
-      return NextResponse.json(uploadedImages[0]);
-    } else {
-      return NextResponse.json({ 
-        message: `Successfully uploaded ${uploadedImages.length} images`,
-        images: uploadedImages 
-      });
-    }
-  } catch (error) {
-    console.error('Error uploading image(s):', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      uploadedImages.length === 1 
+        ? uploadedImages[0]
+        : { 
+            message: `Successfully uploaded ${uploadedImages.length} images`,
+            images: uploadedImages 
+          }
     );
+  } catch (error) {
+    console.error('Error in POST /api/images:', error);
+    return errorResponse('Failed to process image upload', 500, error);
   }
 } 

@@ -5,11 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "prepare-deploy": "node scripts/deploy.js",
-    "create-package": "node prepare-package.js",
-    "postinstall": "mkdir -p public/uploads"
+    "netlify": "next build"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +24,7 @@
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.6.1",
     "framer-motion": "^11.0.8",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.0",
