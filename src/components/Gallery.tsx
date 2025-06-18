@@ -3,7 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { memo, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import ImageTile from './ImageTile';
-import { GalleryImage, CARD_DIMENSIONS } from '../models/gallery';
+// Define GalleryImage interface locally
+interface GalleryImage {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+}
 
 // Fixed dimensions
 const IMAGE_WIDTH = 280;

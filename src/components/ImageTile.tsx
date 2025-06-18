@@ -2,7 +2,22 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { GalleryImage, CARD_DIMENSIONS } from '../models/gallery';
+// Define GalleryImage interface locally
+interface GalleryImage {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+}
+
+// Define card dimensions locally
+const CARD_DIMENSIONS = {
+  md: {
+    width: 280,
+    height: 200
+  }
+};
 
 // Optimize image URL to use responsive sizes or WebP if available
 const getOptimizedImageUrl = (url: string, width = 600, quality = 80): string => {

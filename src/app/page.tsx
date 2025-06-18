@@ -1,7 +1,14 @@
 'use client';
 import { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import Head from 'next/head';
-import { GalleryImage } from '@/models/gallery';
+// Define GalleryImage interface locally
+interface GalleryImage {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+}
 import SharedLayout from '@/components/SharedLayout';
 
 // Lazy load the Gallery component for better performance
