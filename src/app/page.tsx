@@ -48,133 +48,217 @@ const GalleryLoadingFallback = () => (
   </div>
 );
 
-// Static sample images for gallery
+// Static images from your uploads folder
 const STATIC_IMAGES: GalleryImage[] = [
   {
     _id: '1',
-    title: 'Mountain Landscape',
-    description: 'Beautiful mountain view at sunset with vibrant colors',
-    category: 'Nature',
-    url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-01',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011167-y-01.jpg'
   },
   {
     _id: '2',
-    title: 'Urban Architecture',
-    description: 'Modern city buildings with unique architectural design',
-    category: 'Urban',
-    url: 'https://images.unsplash.com/photo-1519999482648-25049ddd37b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-02',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011170-y-02.jpg'
   },
   {
     _id: '3',
-    title: 'Beach Sunset',
-    description: 'Golden sunset over calm ocean waters',
-    category: 'Nature',
-    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-03',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011173-y-03.jpg'
   },
   {
     _id: '4',
-    title: 'Wildlife Photography',
-    description: 'Majestic lion resting in the savanna',
-    category: 'Animals',
-    url: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-04',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011176-y-04.jpg'
   },
   {
     _id: '5',
-    title: 'Abstract Art',
-    description: 'Colorful abstract painting with dynamic shapes',
-    category: 'Art',
-    url: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-05',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011179-y-05.jpg'
   },
   {
     _id: '6',
-    title: 'Food Photography',
-    description: 'Delicious healthy breakfast with fruits and pastries',
-    category: 'Food',
-    url: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-06',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011182-y-06.jpg'
   },
   {
     _id: '7',
-    title: 'Street Photography',
-    description: 'Busy urban street scene with people walking',
-    category: 'Urban',
-    url: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-07',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011185-y-07.jpg'
   },
   {
     _id: '8',
-    title: 'Forest Path',
-    description: 'Mystical forest path with morning fog',
-    category: 'Nature',
-    url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-08',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011188-y-08.jpg'
   },
   {
     _id: '9',
-    title: 'Travel Photography',
-    description: 'Ancient temple ruins at sunset',
-    category: 'Travel',
-    url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-09',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011192-y-09.jpg'
   },
   {
     _id: '10',
-    title: 'Sports Action',
-    description: 'Extreme sports athlete performing tricks',
-    category: 'Sports',
-    url: 'https://images.unsplash.com/photo-1541252260730-0412e8e2108e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project Y-10',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011195-y-10.jpg'
   },
   {
     _id: '11',
-    title: 'Portrait Photography',
-    description: 'Close-up portrait with dramatic lighting',
-    category: 'Portrait',
-    url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-01',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011102-x-01.jpg'
   },
   {
     _id: '12',
-    title: 'Technology',
-    description: 'Modern workspace with high-tech devices',
-    category: 'Technology',
-    url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-02',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011112-x-02.jpg'
   },
   {
     _id: '13',
-    title: 'Minimalist Design',
-    description: 'Simple and elegant minimalist interior design',
-    category: 'Design',
-    url: 'https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-03',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011117-x-03.jpg'
   },
   {
     _id: '14',
-    title: 'Night Sky',
-    description: 'Milky Way galaxy over mountain landscape',
-    category: 'Nature',
-    url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-04',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011122-x-04.jpg'
   },
   {
     _id: '15',
-    title: 'Fashion Photography',
-    description: 'High fashion model in urban environment',
-    category: 'Fashion',
-    url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-05',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011126-x-05.jpg'
   },
   {
     _id: '16',
-    title: 'Architecture Detail',
-    description: 'Geometric patterns in modern architecture',
-    category: 'Urban',
-    url: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-06',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011129-x-06.jpg'
   },
   {
     _id: '17',
-    title: 'Ocean Wave',
-    description: 'Powerful ocean wave crashing against rocks',
-    category: 'Nature',
-    url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-07',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011133-x-07.jpg'
   },
   {
     _id: '18',
-    title: 'Vintage Car',
-    description: 'Classic vintage automobile in pristine condition',
-    category: 'Vintage',
-    url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    title: 'Design Project X-08',
+    description: 'Creative design work from series X',
+    category: 'LOGA',
+    url: '/uploads/1747314011137-x-08.jpg'
+  },
+  {
+    _id: '19',
+    title: 'Design Project X-09',
+    description: 'Creative design work from series X',
+    category: 'POS',
+    url: '/uploads/1747314011142-x-09.jpg'
+  },
+  {
+    _id: '20',
+    title: 'Design Project X-10',
+    description: 'Creative design work from series X',
+    category: 'POS',
+    url: '/uploads/1747314011146-x-10.jpg'
+  },
+  {
+    _id: '21',
+    title: 'Design Project X-11',
+    description: 'Creative design work from series X',
+    category: 'POS',
+    url: '/uploads/1747314011149-x-11.jpg'
+  },
+  {
+    _id: '22',
+    title: 'Design Project X-12',
+    description: 'Creative design work from series X',
+    category: 'OBALY',
+    url: '/uploads/1747314011154-x-12.jpg'
+  },
+  {
+    _id: '23',
+    title: 'Design Project X-13',
+    description: 'Creative design work from series X',
+    category: 'OBALY',
+    url: '/uploads/1747314011157-x-13.jpg'
+  },
+  {
+    _id: '24',
+    title: 'Design Project X-14',
+    description: 'Creative design work from series X',
+    category: 'OBALY',
+    url: '/uploads/1747314011160-x-14.jpg'
+  },
+  {
+    _id: '25',
+    title: 'Design Project X-15',
+    description: 'Creative design work from series X',
+    category: 'MIRROR DESIGN',
+    url: '/uploads/1747314011164-x-15.jpg'
+  },
+  {
+    _id: '26',
+    title: 'Design Project Y-11',
+    description: 'Creative design work from series Y',
+    category: 'MIRROR DESIGN',
+    url: '/uploads/1747314011199-y-11.jpg'
+  },
+  {
+    _id: '27',
+    title: 'Design Project Y-12',
+    description: 'Creative design work from series Y',
+    category: 'MIRROR DESIGN',
+    url: '/uploads/1747314011202-y-12.jpg'
+  },
+  {
+    _id: '28',
+    title: 'Design Project Y-13',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011206-y-13.jpg'
+  },
+  {
+    _id: '29',
+    title: 'Design Project Y-14',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011209-y-14.jpg'
+  },
+  {
+    _id: '30',
+    title: 'Design Project Y-15',
+    description: 'Creative design work from series Y',
+    category: 'VIZUÁLNÍ STYL',
+    url: '/uploads/1747314011212-y-15.jpg'
   }
 ];
 
@@ -277,10 +361,10 @@ export default function Home() {
         {preconnectToImageDomains()}
       </Head>
 
-             <SharedLayout 
-         onCategoryChange={handleCategoryChange} 
-         activeCategory={activeCategory}
-       >
+      <SharedLayout 
+        onCategoryChange={handleCategoryChange} 
+        activeCategory={activeCategory}
+      >
         <Suspense fallback={<GalleryLoadingFallback />}>
           <Gallery images={filteredImages} />
         </Suspense>
