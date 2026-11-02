@@ -21,6 +21,7 @@ export default function SiteFrame({
   current,
   path,
   children,
+  intro,
   backHref,
   nextHref,
   nextLabel,
@@ -29,6 +30,7 @@ export default function SiteFrame({
   current?: PageId;
   path: string;
   children: React.ReactNode;
+  intro?: React.ReactNode;
   backHref?: string;
   nextHref?: string;
   nextLabel?: string;
@@ -48,7 +50,7 @@ export default function SiteFrame({
       <a className="skip" href="#main">
         {copy.skip}
       </a>
-      {home ? <ArrivalFlood /> : null}
+      {intro}
       {home ? <ScrollNav current={current} onMenu={() => setMenu(true)} /> : null}
       <div className="grain" aria-hidden="true" />
       <div className={variant === 'case' ? 'wrap is-case' : 'wrap'} id="top">
@@ -86,22 +88,6 @@ export default function SiteFrame({
       <CaseHeaderScroll />
       {home ? null : <InnerFabOff />}
     </>
-  );
-}
-
-function ArrivalFlood() {
-  useEffect(() => {
-    const html = document.documentElement;
-    if (prefersReducedMotion() || sessionStorage.getItem('cv-arrived')) {
-      html.removeAttribute('data-arrival');
-      return;
-    }
-    html.setAttribute('data-arrival', 'on');
-  }, []);
-  return (
-    <div className="flood" aria-hidden="true">
-      <span />
-    </div>
   );
 }
 
@@ -173,7 +159,7 @@ export function useArrivalLock() {
       }
     });
     if (fold) mo.observe(fold, { attributes: true, attributeFilter: ['class'] });
-    const t = window.setTimeout(release, 2200);
+    const t = window.setTimeout(release, 8000);
     return () => {
       window.clearTimeout(t);
       mo.disconnect();

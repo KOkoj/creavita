@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SiteFrame, { useArrivalLock } from '@/components/chrome/SiteFrame';
 import SiteHeader from '@/components/chrome/SiteHeader';
 import HeroStage from './HeroStage';
+import AsciiIntro from './AsciiIntro';
 import Statement from './Statement';
 import WorkGallery from './WorkGallery';
 import { useLenis } from '@/lib/lenis';
@@ -13,6 +14,7 @@ export default function HomeView() {
   const stageRef = useRef<HTMLElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const infoRef = useRef<HTMLElement>(null);
+  const [introDone, setIntroDone] = useState(false);
   const lenis = useLenis();
   useArrivalLock();
 
@@ -29,12 +31,18 @@ export default function HomeView() {
   }, [lenis]);
 
   return (
-    <SiteFrame variant="home" current="work" path="/">
+    <SiteFrame
+      variant="home"
+      current="work"
+      path="/"
+      intro={introDone ? null : <AsciiIntro onComplete={() => setIntroDone(true)} />}
+    >
       <div className="fold">
         <SiteHeader current="work" onMenu={() => window.dispatchEvent(new Event('site-menu-open'))} />
         <HeroStage
           stageRef={stageRef}
           nameRef={nameRef}
+          introReady={introDone}
           onOpenContact={() => window.dispatchEvent(new Event('site-contact-open'))}
         />
       </div>

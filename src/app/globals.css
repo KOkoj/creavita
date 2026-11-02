@@ -30,6 +30,13 @@ font-display:swap;
 font-weight:500;
 font-style:normal
 }
+@font-face {
+font-family:"Creavita Logo";
+src:url("/fonts/creavita-logo.otf") format("opentype");
+font-display:swap;
+font-weight:400;
+font-style:normal
+}
 .yXJ5eG_className {
 font-family:"General Sans"
 }
@@ -49,6 +56,12 @@ font-family:"General Sans"
 --page-accent:#1c201c;
 --page-wash:#16150a;
 --page-deep:#121102;
+--color-bg:#121102;
+--color-text:#ecf7fa;
+--page-padding:clamp(20px, 4.5vw, 65px);
+--ease-out-glide:cubic-bezier(.22, 1, .36, 1);
+--ease-out-soft:cubic-bezier(.25, .46, .45, .94);
+--font-logo:"Creavita Logo", "General Sans", sans-serif;
 --m:48px;
 --g:24px;
 --hairline-plate:var(--ground,#121102);
@@ -4851,4 +4864,159 @@ font-size:15px
 }
 html.is-fab .hero-cta {
 visibility:hidden
+}
+
+html[data-cv-intro=on] {
+overflow:hidden
+}
+html[data-cv-intro=on] body {
+overflow:hidden
+}
+html[data-cv-intro=on] .wrap,
+html[data-cv-intro=on] .scroll-nav,
+html[data-cv-intro=on] .scroll-rail-wrap,
+html[data-cv-intro=on] .contact-fab,
+html[data-cv-intro=on] .grain {
+opacity:0;
+pointer-events:none
+}
+.ascii-intro {
+z-index:1000;
+padding:var(--page-padding);
+background:var(--page-deep, #121102);
+color:var(--ink, #ecf7fa);
+cursor:pointer;
+-webkit-user-select:none;
+user-select:none;
+opacity:1;
+filter:none;
+clip-path:inset(0);
+transition:opacity .82s var(--ease-out-soft), transform .82s var(--ease-out-glide), filter .82s var(--ease-out-soft), clip-path .82s var(--ease-out-glide);
+place-items:center;
+display:grid;
+position:fixed;
+inset:0;
+transform:none
+}
+.ascii-intro__glow {
+pointer-events:none;
+background:radial-gradient(ellipse 58% 44% at 50% 46%, color-mix(in srgb, var(--page-glow) 72%, transparent) 0%, color-mix(in srgb, var(--page-glow) 30%, transparent) 40%, transparent 74%), radial-gradient(ellipse 42% 32% at 16% 80%, color-mix(in srgb, var(--page-accent) 48%, transparent) 0%, transparent 72%);
+animation:ascii-intro-glow 2.8s var(--ease-out-soft) infinite alternate;
+position:absolute;
+inset:-12%
+}
+.ascii-intro__field {
+z-index:0;
+grid-template-columns:repeat(var(--cols, 15), 1fr);
+grid-template-rows:repeat(var(--rows, 9), 1fr);
+place-items:center;
+display:grid;
+position:absolute;
+inset:clamp(12px, 2.5vw, 28px);
+-webkit-mask-image:radial-gradient(42% 30%, #0000 0% 28%, #000 58%);
+mask-image:radial-gradient(42% 30%, #0000 0% 28%, #000 58%)
+}
+.ascii-intro--booting .ascii-intro__brand {
+animation:ascii-intro-rise .75s var(--ease-out-glide) both;
+animation-delay:80ms
+}
+.ascii-intro--ready .ascii-intro__brand {
+animation:ascii-intro-settle .7s var(--ease-out-glide) both
+}
+.ascii-intro--exit {
+opacity:0;
+pointer-events:none;
+filter:blur(10px);
+clip-path:inset(6% 4%);
+transform:scale(1.02)
+}
+.ascii-intro--exit .ascii-intro__field {
+opacity:0;
+transition:opacity .52s var(--ease-out-soft)
+}
+.ascii-intro__brand {
+z-index:2;
+min-height:1.05em;
+font-family:var(--font-logo);
+letter-spacing:0;
+text-shadow:0 0 48px color-mix(in srgb, var(--page-glow) 60%, transparent);
+justify-content:center;
+align-items:baseline;
+gap:.08em;
+margin:0;
+font-size:clamp(2.7rem, 11vw, 6.4rem);
+font-weight:400;
+line-height:1;
+display:flex;
+position:relative
+}
+.ascii-intro__letter {
+opacity:0;
+filter:blur(5px);
+transition:opacity .28s var(--ease-out-glide), transform .42s var(--ease-out-glide), filter .42s var(--ease-out-glide);
+transition-delay:calc(var(--letter-i, 0) * 18ms);
+display:inline-block;
+transform:translateY(.35em) scale(.92)
+}
+.ascii-intro__letter.is-in {
+opacity:1;
+filter:none;
+transform:none
+}
+.ascii-intro__cell {
+opacity:0;
+width:100%;
+height:100%;
+animation:ascii-intro-cell-fill .7s var(--ease-out-glide) both;
+animation-delay:var(--fill-delay, 0s);
+place-items:center;
+display:grid;
+transform:scale(.7)
+}
+.ascii-intro__arrow {
+object-fit:contain;
+opacity:.55;
+width:clamp(10px, 1.4vw, 16px);
+height:auto;
+display:block
+}
+@keyframes ascii-intro-cell-fill {
+0% {
+opacity:0;
+transform:scale(.7)
+}
+to {
+opacity:1;
+transform:none
+}
+}
+@keyframes ascii-intro-glow {
+0% {
+opacity:.7;
+transform:scale(1)
+}
+to {
+opacity:1;
+transform:scale(1.07)
+}
+}
+@keyframes ascii-intro-rise {
+0% {
+opacity:0;
+filter:blur(5px);
+transform:translateY(20px)
+}
+to {
+opacity:1;
+filter:none;
+transform:none
+}
+}
+@keyframes ascii-intro-settle {
+0% {
+gap:.18em
+}
+to {
+gap:.08em
+}
 }

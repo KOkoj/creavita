@@ -17,10 +17,12 @@ function Name({ nameRef }: { nameRef: React.RefObject<HTMLHeadingElement | null>
 export default function HeroStage({
   stageRef,
   nameRef,
+  introReady,
   onOpenContact,
 }: {
   stageRef: React.RefObject<HTMLElement | null>;
   nameRef: React.RefObject<HTMLHeadingElement | null>;
+  introReady: boolean;
   onOpenContact: () => void;
 }) {
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -55,8 +57,9 @@ export default function HeroStage({
     const touch = isTouch();
     const reveal = () => {
       fit();
-      if (!fold) return;
+      if (!fold || !introReady) return;
       document.documentElement.removeAttribute('data-arrival');
+      document.documentElement.removeAttribute('data-cv-intro');
       if (reduced) {
         fold.classList.add('is-open', 'is-shown', 'is-settled');
         return;
@@ -65,15 +68,19 @@ export default function HeroStage({
       requestAnimationFrame(() => fold.classList.add('is-shown'));
       window.setTimeout(() => fold.classList.add('is-settled'), 1600);
     };
-    document.fonts?.ready.then(reveal);
-    const t = window.setTimeout(reveal, touch ? 1400 : 900);
     const ro = new ResizeObserver(() => fit());
     ro.observe(stage);
+    if (!introReady) {
+      fit();
+      return () => ro.disconnect();
+    }
+    document.fonts?.ready.then(reveal);
+    const t = window.setTimeout(reveal, touch ? 400 : 120);
     return () => {
       window.clearTimeout(t);
       ro.disconnect();
     };
-  }, [stageRef, nameRef]);
+  }, [stageRef, nameRef, introReady]);
 
   useEffect(() => {
     const media = mediaRef.current;
