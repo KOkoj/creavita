@@ -192,6 +192,7 @@ function MotionGallery({ slides }: { slides: Slide[] }) {
 
       const bindLinks = (i: number) => {
         const s = slides[i];
+        window.dispatchEvent(new CustomEvent('cv-atmosphere', { detail: { src: s.image } }));
         if (open.current) {
           open.current.href = s.url;
           open.current.setAttribute('aria-label', s.linkLabel);
@@ -478,6 +479,10 @@ function TouchGallery({ slides }: { slides: Slide[] }) {
   const n = slides.length;
 
   const go = (next: number) => setI(((next % n) + n) % n);
+
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('cv-atmosphere', { detail: { src: slide.image } }));
+  }, [slide.image]);
 
   useEffect(() => {
     const el = root.current;

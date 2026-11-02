@@ -44,6 +44,26 @@ font-family:"General Sans"
 --font-sans:"General Sans"
 }
 
+@property --page-glow {
+syntax:"<color>";
+inherits:true;
+initial-value:#2a2616
+}
+@property --page-accent {
+syntax:"<color>";
+inherits:true;
+initial-value:#1c201c
+}
+@property --page-wash {
+syntax:"<color>";
+inherits:true;
+initial-value:#16150a
+}
+@property --page-deep {
+syntax:"<color>";
+inherits:true;
+initial-value:#121102
+}
 :root {
 --paper:#eceae4;
 --paper-2:#e4e2db;
@@ -4803,7 +4823,8 @@ height:24px
 }
 
 
-.hero-media canvas {
+.hero-media canvas,
+.hero-media .cv-shader {
 width:100%;
 height:100%;
 display:block;
@@ -4822,10 +4843,11 @@ display:block
 transform-origin:50%
 }
 .hero-media {
---shadow-opacity:.92;
+--shadow-opacity:1;
 background:var(--page-deep,#121102)
 }
-.hero-media canvas {
+.hero-media canvas,
+.hero-media .cv-shader {
 mix-blend-mode:normal;
 opacity:1
 }
@@ -5019,4 +5041,47 @@ gap:.18em
 to {
 gap:.08em
 }
+}
+
+.cv-shader {
+--page-glow:#2a2616;
+--page-accent:#1c201c;
+--page-wash:#16150a;
+--page-deep:#121102;
+transition:--page-glow .9s var(--ease-out-soft), --page-accent .9s var(--ease-out-soft), --page-wash .9s var(--ease-out-soft), --page-deep .9s var(--ease-out-soft);
+position:absolute;
+inset:0;
+overflow:hidden
+}
+.cv-shader__field {
+position:absolute;
+inset:0;
+background:
+  radial-gradient(ellipse 95% 80% at 88% 42%, color-mix(in srgb, var(--page-glow) 78%, transparent) 0%, color-mix(in srgb, var(--page-glow) 48%, transparent) 22%, color-mix(in srgb, var(--page-glow) 22%, transparent) 42%, color-mix(in srgb, var(--page-glow) 6%, transparent) 58%, transparent 72%),
+  radial-gradient(ellipse 70% 60% at 4% 92%, color-mix(in srgb, var(--page-accent) 62%, transparent) 0%, color-mix(in srgb, var(--page-accent) 32%, transparent) 28%, color-mix(in srgb, var(--page-accent) 10%, transparent) 48%, transparent 62%),
+  radial-gradient(ellipse 55% 45% at 38% -5%, color-mix(in srgb, var(--page-wash) 48%, transparent) 0%, color-mix(in srgb, var(--page-wash) 22%, transparent) 34%, transparent 68%),
+  linear-gradient(148deg, var(--page-deep) 0%, color-mix(in srgb, var(--page-wash) 55%, var(--page-deep)) 22%, var(--page-wash) 40%, color-mix(in srgb, var(--page-accent) 40%, var(--page-wash)) 58%, color-mix(in srgb, var(--page-accent) 55%, var(--page-deep)) 74%, var(--page-deep) 100%)
+}
+.cv-shader.is-gl .cv-shader__field {
+opacity:0
+}
+.cv-shader canvas {
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+display:none
+}
+.cv-shader.is-gl canvas {
+display:block
+}
+.cv-shader__noise {
+pointer-events:none;
+opacity:.06;
+mix-blend-mode:soft-light;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+background-repeat:repeat;
+background-size:160px 160px;
+position:absolute;
+inset:0
 }
