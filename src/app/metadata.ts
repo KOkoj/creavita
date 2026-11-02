@@ -1,27 +1,23 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dynamic Image Gallery',
-  description: 'Explore our curated collection of high-quality images across various categories',
-  keywords: ['gallery', 'images', 'photography', 'art', 'responsive'],
-  metadataBase: new URL('https://dynamic-gallery.example.com'),
+  title: 'CREAVITA — úvodní stránka',
+  description:
+    'Studio formují lidé, kterým hluboce záleží na designu i procesu, který za ním stojí.',
+  keywords: [
+    'Creavita',
+    'POS',
+    'stojany',
+    'roll-upy',
+    'totemy',
+    'promo stánek',
+    'grafický design',
+  ],
+  metadataBase: new URL('https://creavita.cz'),
   openGraph: {
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Dynamic Image Gallery Preview'
-      }
-    ],
     type: 'website',
-    title: 'Dynamic Image Gallery',
-    description: 'Explore our curated collection of high-quality images across various categories',
+    title: 'CREAVITA',
+    description:
+      'Studio formují lidé, kterým hluboce záleží na designu i procesu, který za ním stojí.',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Dynamic Image Gallery',
-    description: 'Explore our curated collection of high-quality images across various categories',
-    images: ['/og-image.jpg'],
-  }
-}; 
+};
